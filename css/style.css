@@ -123,3 +123,45 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
     scroll-padding-inline:14px;
   }
 }
+
+
+/* Final refinement: remove redundant headings and make the current month unmistakable */
+.app{grid-template-rows:auto auto minmax(440px,1fr)}
+.brand-block p{display:none}
+.section-heading,.calendar-header{display:none}
+.life-panel{padding-top:12px}
+.life-scale-wrap{margin-top:48px}
+.year-grid{padding-top:12px}
+.month-card.current-month{
+  background:linear-gradient(180deg,#edf5ff 0%,#ffffff 72%);
+  border:2px solid #3985e8;
+  box-shadow:0 8px 24px rgba(52,127,229,.16), inset 0 0 0 3px rgba(255,255,255,.78);
+  transform:translateY(-4px);
+  position:relative;
+}
+.month-card.current-month .month-name{background:#dcecff;color:#205fae}
+.month-card.current-month .month-name strong{color:#1559a8}
+.month-card.current-month .month-name span{color:#5480b5}
+.month-current-label{
+  display:none;
+  margin-left:auto;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#347fe5;
+  color:#fff;
+  font-size:12px;
+  line-height:1;
+  font-weight:750;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+.month-card.current-month .month-current-label{display:inline-flex;align-items:center}
+.month-card.current-month .month-ring{
+  background:conic-gradient(#347fe5 calc(var(--p,0)*1%),#d9e8fb 0);
+}
+.month-card.current-month .day-date.day-today:before{box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(52,127,229,.22),0 3px 9px rgba(52,127,229,.28)}
+@media(max-width:680px){
+  .life-panel{padding-top:8px}
+  .life-scale-wrap{margin-top:46px}
+  .month-card.current-month{transform:translateY(-2px)}
+}
