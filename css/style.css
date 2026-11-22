@@ -103,3 +103,23 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
  .ring-card{background:transparent;border:0;min-height:100px;padding:6px 2px}
  .progress-ring:before{background:var(--canvas)}
 }
+
+
+/* Calendar viewport: preserve full card edges and provide deliberate side gutters */
+.app{width:100%;max-width:none}
+.calendar-panel{min-width:0;overflow:visible}
+.year-grid{
+  min-width:0;
+  width:100%;
+  padding:8px clamp(12px,2vw,24px) 16px;
+  scroll-padding-inline:clamp(12px,2vw,24px);
+  scroll-snap-type:x proximity;
+  scrollbar-gutter:stable;
+}
+.month-card{scroll-snap-align:center}
+@media(max-width:680px){
+  .year-grid{
+    padding-inline:14px;
+    scroll-padding-inline:14px;
+  }
+}
