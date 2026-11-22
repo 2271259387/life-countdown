@@ -211,7 +211,6 @@
   function renderYearCalendar(year) {
     const grid = $('year-grid');
     grid.innerHTML = '';
-    $('calendar-year').textContent = year;
 
     for (let month = 0; month < 12; month++) {
       const card = document.createElement('article');
@@ -219,7 +218,7 @@
       card.dataset.month = String(month);
       card.innerHTML = `
         <div class="month-head">
-          <div class="month-name"><strong>${month + 1} 月</strong><span>${year} · ${formatMonthTempLabel(month)}</span></div>
+          <div class="month-name"><strong>${month + 1} 月</strong><span>${formatMonthTempLabel(month)}</span></div><span class="month-current-label" aria-label="当前月份">本月</span>
           <div class="month-ring" data-month-ring="${month}" role="img"></div>
         </div>
         <div class="days-grid" data-days-grid="${month}"></div>`;
@@ -304,7 +303,6 @@
 
   function updateUI() {
     const state = getLifeState();
-    $('profile-line').textContent = `出生 ${formatShort(state.birth)} · 预期 ${config.maxAge} 岁 · 下一岁 ${formatShort(state.nextBirthday)}`;
     const agePct = state.ageRemaining * 100;
     const yearPct = state.yearRemaining * 100;
 
