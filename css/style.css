@@ -165,3 +165,31 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
   .life-scale-wrap{margin-top:46px}
   .month-card.current-month{transform:translateY(-2px)}
 }
+
+
+/* Directional progress rings */
+.progress-ring{
+  --ring-start:#a8d1ff;--ring-mid:#559cf0;--ring-end:#245fc7;
+  --track:#e8eef6;--ring-thickness:9px;
+  background:conic-gradient(from -90deg,var(--ring-start) 0%,var(--ring-mid) 52%,var(--ring-end) calc(var(--p,0)*1%),var(--track) calc(var(--p,0)*1%),var(--track) 100%);
+  filter:drop-shadow(0 3px 6px rgba(49,112,190,.13));
+  transition:filter .35s ease;
+}
+.progress-ring.amber{
+  --ring-start:#ffe0a9;--ring-mid:#f2ad55;--ring-end:#cf7022;--track:#f2ece3;
+  filter:drop-shadow(0 3px 6px rgba(204,139,59,.14));
+}
+.progress-ring:before{
+  inset:var(--ring-thickness);
+  background:var(--canvas);
+  box-shadow:inset 0 1px 3px rgba(30,48,72,.045);
+}
+.progress-ring:after{
+  content:"";position:absolute;width:13px;height:13px;left:50%;top:0;
+  transform:translate(-50%,-2px);border-radius:50%;
+  background:var(--ring-start);border:2px solid var(--canvas);
+  box-shadow:0 1px 5px rgba(35,70,120,.16);
+}
+.progress-ring.amber:after{background:var(--ring-start)}
+.ring-hole strong{font-variant-numeric:tabular-nums}
+@media(max-width:900px){.progress-ring{--ring-thickness:8px}}
