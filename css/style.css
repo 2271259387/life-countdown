@@ -78,3 +78,28 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
 @media(max-width:900px){.app{padding:calc(16px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));grid-template-rows:auto auto minmax(500px,1fr);gap:14px}.life-panel{gap:16px;padding:20px}.ring-card{width:112px;min-height:130px}.progress-ring{width:70px}.year-grid{grid-auto-columns:min(78vw,calc(100dvh - 400px));grid-template-columns:repeat(12,min(78vw,calc(100dvh - 400px)))}}
 @media(max-width:680px){.app{min-height:100dvh;grid-template-rows:auto auto minmax(540px,1fr);padding:calc(14px + env(safe-area-inset-top)) 12px calc(18px + env(safe-area-inset-bottom));gap:12px}.topbar{min-height:56px}.brand-block h1{font-size:27px}.brand-block p{font-size:12px}.life-panel{grid-template-columns:1fr;padding:18px;border-radius:21px;gap:18px}.life-scale-wrap{margin-top:62px}.legend{gap:9px;font-size:11px}.rings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.ring-card{width:auto;min-height:118px;flex-direction:row;gap:12px;justify-content:center}.progress-ring{width:66px}.ring-copy{text-align:left}.calendar-panel{min-height:560px;padding:15px;border-radius:21px}.calendar-header{align-items:flex-start;flex-direction:column;gap:10px}.calendar-legend{font-size:11px;gap:12px}.year-grid{min-height:455px;grid-auto-columns:min(86vw,390px);grid-template-columns:repeat(12,min(86vw,390px));gap:12px}.month-card{padding:13px;grid-template-rows:38px minmax(0,1fr);gap:9px}.month-head{height:38px;min-height:38px}.month-name strong{font-size:18px}.month-name span{font-size:11px}.weekday{font-size:12px}.day-date{font-size:14px}.modal{padding:0;align-items:flex-end}.modal-card{border-radius:25px 25px 0 0;padding:26px 22px max(26px,env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* Flat, borderless composition: one continuous canvas rather than stacked panels */
+:root{--canvas:#f7f8fa;--panel:transparent;--shadow:none}
+.app{gap:10px;grid-template-rows:auto auto minmax(440px,1fr)}
+.life-panel,.calendar-panel{background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.life-panel{padding:20px 4px 24px;gap:clamp(24px,3vw,44px);border-bottom:1px solid #e6eaf0}
+.calendar-panel{padding:10px 0 0;gap:12px}
+.calendar-header{padding:0 4px 13px;border-bottom:1px solid #e9edf2}
+.ring-card{background:transparent;border:0;border-radius:0;padding:10px 8px;min-height:128px}
+.ring-card.featured{background:transparent;border-color:transparent}
+.progress-ring:before{background:var(--canvas)}
+.month-card{background:#fff;border-color:#edf0f4;box-shadow:0 2px 9px rgba(34,52,74,.025)}
+.month-card.current-month{background:#fbfdff;border-color:rgba(52,127,229,.38);box-shadow:0 4px 14px rgba(52,127,229,.07)}
+@media(max-width:900px){
+ .life-panel{padding:18px 2px 20px;gap:16px}
+ .calendar-panel{padding:8px 0 0}
+}
+@media(max-width:680px){
+ .app{gap:8px}
+ .life-panel{padding:16px 2px 18px;gap:16px}
+ .calendar-panel{padding:8px 0 0}
+ .ring-card{background:transparent;border:0;min-height:100px;padding:6px 2px}
+ .progress-ring:before{background:var(--canvas)}
+}
