@@ -177,6 +177,7 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
 }
 .progress-ring.amber{
   --ring-start:#ffe0a9;--ring-mid:#f2ad55;--ring-end:#cf7022;--track:#f2ece3;
+  background:conic-gradient(from -90deg,var(--ring-start) 0%,var(--ring-mid) 52%,var(--ring-end) calc(var(--p,0)*1%),var(--track) calc(var(--p,0)*1%),var(--track) 100%);
   filter:drop-shadow(0 3px 6px rgba(204,139,59,.14));
 }
 .progress-ring:before{
