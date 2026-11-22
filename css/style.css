@@ -193,3 +193,9 @@ button,input{font:inherit}button{-webkit-tap-highlight-color:transparent;cursor:
 .progress-ring.amber:after{background:var(--ring-start)}
 .ring-hole strong{font-variant-numeric:tabular-nums}
 @media(max-width:900px){.progress-ring{--ring-thickness:8px}}
+
+
+/* Ring centers show remaining days; percentage stays beneath each ring */
+.progress-ring:after{content:none!important;display:none!important}
+.ring-hole strong{font-size:23px;font-weight:760}
+.ring-copy span{font-variant-numeric:tabular-nums}
