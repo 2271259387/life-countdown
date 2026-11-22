@@ -310,10 +310,10 @@
     setRing('year-ring', state.yearRemaining, `本年度剩余 ${yearPct.toFixed(1)}%`);
 
     $('birthday-days').textContent = state.daysToBirthday;
-    $('next-age-label').textContent = `距 ${state.currentAge + 1} 岁`;
+    $('next-age-label').textContent = '距下一年';
     $('age-percent').textContent = `剩余 ${agePct.toFixed(1)}%`;
     $('year-percent').textContent = `剩余 ${yearPct.toFixed(1)}%`;
-    $('year-days-left').textContent = `${state.daysToYearEnd} 天`;
+    $('year-days-left').textContent = state.daysToYearEnd;
 
     renderLifeScale(state);
     updateCalendarState(state);
