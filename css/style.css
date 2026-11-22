@@ -994,3 +994,70 @@ button { -webkit-tap-highlight-color: transparent; }
   .month-head { height: 28px; }
   .day-date { width: min(76%, 24px); }
 }
+
+
+/* Use the calendar panel's full available height for large, square month cards. */
+.calendar-panel {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+.year-grid {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: thin;
+  padding: 2px 2px 12px;
+}
+.month-card {
+  flex: 0 0 auto;
+  width: auto;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  align-self: stretch;
+  grid-template-rows: 34px minmax(0, 1fr);
+  padding: 10px;
+  gap: 6px;
+}
+.month-head {
+  height: 34px;
+  min-height: 0;
+  overflow: hidden;
+}
+.days-grid {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+.day-date {
+  width: min(78%, 38px);
+  max-width: 38px;
+  justify-self: center;
+  align-self: center;
+}
+@media (max-width: 560px) {
+  .year-grid { gap: 10px; }
+  .month-card {
+    grid-template-rows: 30px minmax(0, 1fr);
+    padding: 8px;
+  }
+  .month-head { height: 30px; }
+  .day-date { width: min(78%, 30px); }
+}
