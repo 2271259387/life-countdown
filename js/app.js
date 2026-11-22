@@ -252,7 +252,8 @@
   }
 
   function updateCalendarState(state) {
-    if (renderedYear !== state.year) renderYearCalendar(state.year);
+    const yearChanged = renderedYear !== state.year;
+    if (yearChanged) renderYearCalendar(state.year);
     const todayTime = state.today.getTime();
 
     document.querySelectorAll('.month-card').forEach(card => {
@@ -267,6 +268,16 @@
       monthRing.setAttribute('aria-label', `${month + 1} 月剩余 ${(ratio * 100).toFixed(1)}%`);
       monthRing.title = `${month + 1} 月剩余 ${(ratio * 100).toFixed(1)}%`;
     });
+
+    const grid = $('year-grid');
+    const currentCard = grid.querySelector('.month-card.current-month');
+    if (currentCard && (yearChanged || grid.dataset.centeredMonth !== currentCard.dataset.month)) {
+      grid.scrollLeft = Math.max(
+        0,
+        currentCard.offsetLeft - (grid.clientWidth - currentCard.offsetWidth) / 2
+      );
+      grid.dataset.centeredMonth = currentCard.dataset.month;
+    }
 
     document.querySelectorAll('.day-date').forEach(cell => {
       const date = parseLocalDate(cell.dataset.date);
