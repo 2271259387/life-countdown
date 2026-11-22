@@ -305,6 +305,13 @@
   function updateUI() {
     const state = getLifeState();
     $('profile-line').textContent = `出生 ${formatShort(state.birth)} · 预期 ${config.maxAge} 岁 · 下一岁 ${formatShort(state.nextBirthday)}`;
+    const lifeProgress = clamp(((state.currentAge + state.ageElapsed) / config.maxAge) * 100, 0, 100);
+    $('widget-age').textContent = `人生 · ${state.currentAge} 岁`;
+    $('widget-birthday').textContent = `下一岁还有 ${state.daysToBirthday} 天 · 预期 ${config.maxAge} 岁`;
+    $('widget-progress').style.width = `${lifeProgress.toFixed(2)}%`;
+    $('widget-remaining').textContent = `人生进度 ${lifeProgress.toFixed(1)}%`;
+    $('icon-month').textContent = `${state.today.getMonth()+1}月`;
+    $('icon-day').textContent = String(state.today.getDate());
 
     const agePct = state.ageRemaining * 100;
     const yearPct = state.yearRemaining * 100;
@@ -336,14 +343,43 @@
     $('settings-modal').setAttribute('aria-hidden', 'true');
   }
 
+  function updateDesktopClock() {
+    const now = new Date();
+    $('desktop-time').textContent = now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});
+    $('desktop-date').textContent = now.toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});
+    $('home-date').textContent = now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  }
+
+  function openApp(name) {
+    $('home-screen').hidden = true;
+    $('app-window').hidden = false;
+    if (name === 'settings') {
+      openSettings();
+    } else if (name === 'calendar') {
+      const current = $('year-grid').querySelector('.current-month');
+      if (current) current.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    }
+  }
+
+  function returnHome() {
+    closeSettings();
+    $('app-window').hidden = true;
+    $('home-screen').hidden = false;
+  }
+
   function setupEvents() {
+    document.querySelectorAll('[data-open-app]').forEach(button => {
+      button.addEventListener('click', () => openApp(button.dataset.openApp));
+    });
+    $('home-button').addEventListener('click', returnHome);
+    $('window-settings').addEventListener('click', openSettings);
     $('settings-button').addEventListener('click', openSettings);
     $('close-settings').addEventListener('click', closeSettings);
     $('settings-modal').addEventListener('click', (event) => {
       if (event.target === $('settings-modal')) closeSettings();
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeSettings();
+      if (event.key === 'Escape') { if ($('settings-modal').classList.contains('open')) closeSettings(); else returnHome(); }
     });
 
     $('reset-settings').addEventListener('click', () => {
@@ -371,8 +407,9 @@
   function start() {
     setupEvents();
     renderYearCalendar(new Date().getFullYear());
+    updateDesktopClock();
     updateUI();
-    timer = window.setInterval(updateUI, 60000);
+    timer = window.setInterval(() => { updateUI(); updateDesktopClock(); }, 60000);
     window.addEventListener('focus', updateUI);
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) updateUI();
