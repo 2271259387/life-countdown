@@ -154,39 +154,29 @@
     const maxAge = Number(config.maxAge);
     const scale = $('life-scale');
     const labels = $('scale-labels');
-
     scale.innerHTML = '';
     labels.innerHTML = '';
-    scale.style.setProperty('--tick-count', maxAge + 1);
 
     const currentForScale = clamp(state.currentAge, 0, maxAge);
-
-    for (let age = 0; age <= maxAge; age++) {
-      const dot = document.createElement('span');
-      dot.className = 'life-tick';
-      let progress = 100;
-      if (age < currentForScale) {
-        dot.classList.add('past');
-        progress = 100;
-      } else if (age === currentForScale) {
-        dot.classList.add('current');
-        progress = clamp(state.ageElapsed * 100, 0, 100);
-      } else {
-        dot.classList.add('future');
-        progress = 100;
-      }
-      dot.style.setProperty('--tick-progress', progress.toFixed(2));
-      dot.title = `${age} 岁`;
-      dot.setAttribute('aria-label', `${age} 岁`);
-      scale.appendChild(dot);
-    }
+    const pastPercent = (currentForScale / maxAge) * 100;
+    const progressPercent = clamp(
+      ((currentForScale + state.ageElapsed) / maxAge) * 100,
+      0,
+      100
+    );
+    scale.style.setProperty('--life-past', `${pastPercent}%`);
+    scale.style.setProperty('--life-progress', `${progressPercent}%`);
+    scale.setAttribute('role', 'img');
+    scale.setAttribute(
+      'aria-label',
+      `已走过 ${state.currentAge} 岁，当前年龄进度 ${(state.ageElapsed * 100).toFixed(1)}%，预期寿命 ${maxAge} 岁`
+    );
 
     const steps = new Set([0, maxAge]);
     const labelStep = maxAge <= 40 ? 5 : 10;
     for (let age = labelStep; age < maxAge; age += labelStep) {
       steps.add(age);
     }
-
     [...steps].sort((a, b) => a - b).forEach(age => {
       const label = document.createElement('span');
       label.className = 'scale-label';
@@ -195,9 +185,8 @@
       labels.appendChild(label);
     });
 
-    const pos = (currentForScale / maxAge) * 100;
     const badge = $('current-age-badge');
-    badge.style.setProperty('--current-position', `${pos}%`);
+    badge.style.setProperty('--current-position', `${progressPercent}%`);
     badge.textContent = `${state.currentAge} 岁`;
   }
 
